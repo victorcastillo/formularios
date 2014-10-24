@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="{{STATIC_URL}}js/jquery.js"></script>
+	<script>
+
+		function changeMotivos(){
+			$('#step_2').html("");
+			$.get('/tutorias/motivo/', {'motivo':$('#motivos').val()}, function(data) {
+				$('#step_2').append(data);
+			});
+		}
+
+		$(document).ready(function($) {
+			$('#id_proceso').on('change',function(event){
+				$.get('/tutorias/proceso_administrativo_proceso/', {'proceso': $('#id_proceso').val()},  function(data) {
+					$('#step_1').html(data);
+				});
+			});
+		});
+	</script>
+</head>
+<body>
+	{%csrf_token%}
+	{{formulario.as_p}}
+	<div id="step_1">
+		
+	</div>
+</body>
+</html>

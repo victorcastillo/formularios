@@ -4,12 +4,8 @@
 	<meta charset="UTF-8">
 </head>
 <body>
-
-	Nombre del usuario que llenó el formulario: {{usuario.first_name}}	{{usuario.last_name}} <br><br>
-	Email del usuario que llenó el formulario: {{usuario.email}} <br><br>
-	Matrícula del alumno: {{matricula}} <br><br>
-	Nombre del alumno: {{nombre_alumno}} <br><br>
-	Email del alumno: {{email_alumno}} <br><br>
-	Proceso: {{proceso}}
+	<div>
+		{{tabla|safe}}
+	</div>
 </body>
 </html>

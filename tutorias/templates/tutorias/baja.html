@@ -1,17 +1,17 @@
 <h1>Sección para bajas</h1> <br><br>
 
 Tipo de baja *: <br><br>
-<select name="tipo_baja" id="tipo_baja">
+<select name="tipo_de_baja" id="tipo_baja">
 	<option value="definitiva">Definitiva</option>
 	<option value="temporal"> Temporal</option>
 </select> <br><br>
 
 Primer fecha cuando el alumno la solicitó *: <br><br>
-<input type="date" required> <br><br>
+<input type="date" name="fecha_de_solicitud" required> <br><br>
 	
 
 Ciclo de ingreso *: <br><br>
-<select required>
+<select required name="ciclo_de_ingreso">
 	<option value="Septiembre 2011 (AA012 Regular)">Septiembre 2011 (AA012 Regular)</option>
 	<option value="Noviembre 2011 (AB012 Anticipada)">Noviembre 2011 (AB012 Anticipada)</option>
 	<option value="Enero 2012 (AB012 Regular)">Enero 2012 (AB012 Regular)</option>
@@ -46,7 +46,7 @@ Ciclo de ingreso *: <br><br>
 
 Indica la carrera o modalidad *: <br><br>
 
-<select required>
+<select required name="carrera">
 	<option value="LADGE101 Administración">LADGE101 Administración</option>
 	<option value="LADNE101 Administración de Negocios">LADNE101 Administración de Negocios</option>
 	<option value="LADTI101 Administración de Tecnologías de &nbsp;Información">LADTI101 Administración de Tecnologías de &nbsp;Información</option>
@@ -75,7 +75,7 @@ Indica la carrera o modalidad *: <br><br>
 
 Tipo de jornada (Si no aplica seleccionar N/A) *: <br><br>
 
-<select required>
+<select required name="tipo_de_jornada">
 	<option value="N/A">N/A</option>
 	<option value="Reducida">Reducida</option>
 	<option value="Completa">Completa</option>
@@ -84,7 +84,7 @@ Tipo de jornada (Si no aplica seleccionar N/A) *: <br><br>
 
 Edad del alumno *: <br><br>
 
-<input type="number"> <br><br>
+<input type="number" required name="edad"> <br><br>
 
 Género *: <br><br>
 
@@ -96,7 +96,7 @@ Género *: <br><br>
 
 Estado civil *: <br><br>
 
-<select required>
+<select required name="estado_civil">
 	<option value="Soltero">Soltero</option>
 	<option value="Casado">Casado</option>
 	<option value="Unión libre">Unión libre</option>
@@ -104,15 +104,15 @@ Estado civil *: <br><br>
 
 
 País y ciudad de residencia* : <br><br>
-<input type="text"> <br><br>
+<input type="text" required name="residencia"> <br><br>
 
 Porcentaje o descuento de beca *: <br><br>
-<input type="text"> <br><br>
+<input type="text" required name="descuento_de_beca"> <br><br>
 
 
 Estado actual en admisiones *: <br><br>
 
-<select required>
+<select required name="estado_en_admisiones">
 	<option value="Matriculado">Matriculado</option>
 	<option value="Baja Temporal">Baja Temporal</option>
 	<option value="Baja definitiva">Baja definitiva</option>
@@ -123,7 +123,7 @@ Estado actual en admisiones *: <br><br>
 
 Motivo de la baja * : <br><br>
 
-<select id="motivos"  onchange="changeMotivos();" required >
+<select id="motivos" name="motivo_de_baja"  onchange="changeMotivos();" required >
 	<option value=""></option>
 	<option value="Económicos">Económicos</option>
 	<option value="Desempleo">Desempleo</option>
@@ -136,5 +136,5 @@ Motivo de la baja * : <br><br>
 </select> <br><br>
 
 <div id="step_2">
-	
+
 </div>

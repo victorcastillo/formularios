@@ -1,5 +1,6 @@
-¿Que área o departamento es responsable del mal servicio? *
-<select required>
+¿Que área o departamento es responsable del mal servicio? *: <br><br>
+<select id="mal_servicio" onchange="getServicio();" name="servicio_deficiente" required>
+	<option value="" selected></option>
 	<option value="Ventas">Ventas</option>
 	<option value="Servicios escolares">Servicios escolares</option>
 	<option value="Tesorería">Tesorería</option>
@@ -9,11 +10,8 @@
 	<option value="Recursos educativos / Contenidos">Recursos educativos / Contenidos</option>
 	<option value="Soporte técnico">Soporte técnico</option>
 </select> <br><br>
-Ingresa todos los comentarios necesarios pero breves y objetivos  * : <br><br> <textarea required name="observaciones" cols="30" rows="10"></textarea>
 
-
- 
-  
+<div id="step_servicio"></div>
  
  
  

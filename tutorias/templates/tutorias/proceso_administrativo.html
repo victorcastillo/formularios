@@ -8,11 +8,32 @@
 
 		function changeMotivos(){
 			$('#step_2').html("");
-			$.get('/tutorias/motivo/', {'motivo':$('#motivos').val()}, function(data) {
-				$('#step_2').append(data);
-			});
+			if($('#motivos').val() != ""){
+				$.get('/tutorias/motivo/', {'motivo':$('#motivos').val()}, function(data) {
+					$('#step_2').append(data);
+				});
+			}
 		}
 
+		function getServicio(){
+			$('#step_servicio').html("");
+			if($('#mal_servicio').val() != ""){
+				$.get('/tutorias/servicio/',{'servicio': $('#mal_servicio').val()}, function(data) {
+					$('#step_servicio').html(data);
+				});
+			}
+		}
+
+		function textFieldOtro(div_text_id, id_text, opcion){
+			var val = $('#'+opcion).val();
+			if(val == "Otro"){
+				$('#'+div_text_id).show();
+				$('#'+id_text).attr('required', 'required');
+			}else{
+				$('#'+div_text_id).hide();
+				$('#'+id_text).removeAttr('required');
+			}
+		}
 		$(document).ready(function($) {
 			$('#id_proceso').on('change',function(event){
 				$.get('/tutorias/proceso_administrativo_proceso/', {'proceso': $('#id_proceso').val()},  function(data) {
@@ -23,10 +44,33 @@
 	</script>
 </head>
 <body>
-	{%csrf_token%}
-	{{formulario.as_p}}
-	<div id="step_1">
+	<form action="/tutorias/proceso_administrativo/" method="POST">
+		{%csrf_token%}
+		Matriucla *: <br><br>
+		<input type="text"  name="matricula" required><br><br>
+		Nombre Alumno *: <br><br>
+		<input type="text" name="alumno" required><br><br>
+		Email Alumno *: <br><br>
+		<input type="email" name="email" required><br><br>
+		Proceso *: <br><br>
+		<select name="proceso" id="id_proceso" required>
+			<option value="">--------</option>
+			<option value="Baja">Baja</option>
+			<option value="Retención">Retención</option>
+			<option value="Cambio de ciclo">Cambio de ciclo</option>
+			<option value="Baja de materias">Baja de materias</option>
+			<option value="Cancelación de venta">Cancelación de venta</option>
+			<option value="Actualización de datos en Admisiones y/o materias de Aula virtual">Actualización de datos en Admisiones y/o materias de Aula virtual</option>
+			<option value="Reducción o incremento de jornada">Reducción o incremento de jornada</option>
+			<option value="Cambio de licenciatura">Cambio de licenciatura</option>
+			<option value="Cambio de materias">Cambio de materias</option>
+		</select>
+
 		
-	</div>
+		<div id="step_1">
+			
+		</div>
+		<input type="submit">
+	</form>
 </body>
 </html>

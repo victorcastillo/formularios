@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import ProcesoAdministrativoForm
 import mandrill
 from django.template.loader import render_to_string
 from django.conf import settings
@@ -19,26 +18,33 @@ def enviar_email(html, from_email, subject, to):
 	return False
 
 def proceso_administrativo(request):
-	formulario = ProcesoAdministrativoForm()
+	import collections
 	if request.method == "POST":
-		formulario = ProcesoAdministrativoForm(request.POST)
-		if formulario.is_valid():
-			usuario = request.user
-			matricula = formulario.cleaned_data['matricula']
-			nombre_alumno = formulario.cleaned_data['nombre_alumno']
-			email_alumno = formulario.cleaned_data['email_alumno']
-			proceso = formulario.cleaned_data['proceso']
-			from_email = "contacto@utel.edu.mx"
-			subject = proceso
-			if proceso == "Baja" or proceso == u'Retención':
-				to = [{"email": "vcastito@utel.edu.mx", "type":"to", "name": "Ayuda UTEL"}]
-			else:
-				to = [{"email": "vcastito@utel.edu.mx", "type":"to", "name": "Escolares UTEL"}]
-			html = render_to_string('tutorias/proceso.html', locals())
-			if enviar_email(html, from_email, subject, to):
-				return HttpResponse(u'Petición enviada')
-			else:
-				return HttpResponse(u'Petición fallida intentelo de nuevo')
+		variables =  dict(request.POST.copy())
+		del variables['csrfmiddlewaretoken']
+		para_tabla = {}
+		for variable,valor in variables.iteritems():
+			valor = ", ".join(valor)
+			para_tabla[variable] = variable.replace('_',' ').capitalize() +' : ' + valor
+		content_table = ''
+		para_tabla = collections.OrderedDict(sorted(para_tabla.items()))
+		for c,v in para_tabla.iteritems():
+			content_table += '<tr><td> %s </td></tr>' % v
+		
+		tabla = '<table border="1">%s</table>' % content_table
+		
+		from_email = "contacto@utel.edu.mx"
+		subject = para_tabla['proceso']
+		proceso = variables['proceso']
+		if proceso == "Baja" or proceso == u'Retención':
+			to = [{"email": "vcastito@utel.edu.mx", "type":"to", "name": "Ayuda UTEL"}]
+		else:
+		 	to = [{"email": "vcastito@utel.edu.mx", "type":"to", "name": "Escolares UTEL"}]
+		html = render_to_string('tutorias/proceso.html', locals())
+		if enviar_email(html, from_email, subject, to):
+			return HttpResponse(u'Petición enviada')
+		else:
+			return HttpResponse(u'Petición fallida intentelo de nuevo')
 
 	return render(request, 'tutorias/proceso_administrativo.html', locals())
 
@@ -47,9 +53,8 @@ def elimina_tildes(s):
    return ''.join((c for c in unicodedata.normalize('NFD', s) if unicodedata.category(c) != 'Mn'))
 
 def proceso_administrativo_proceso(request):
-	proceso = request.GET['proceso'].lower()
-	if proceso == "baja":
-		html  = "tutorias/baja.html"
+	proceso = elimina_tildes(request.GET['proceso']).lower().split(' ')[0]
+	html  = "tutorias/%s.html" % proceso
 	render_ =  render_to_string(html,{})
 	return HttpResponse(render_)
 
@@ -57,4 +62,9 @@ def proceso_administrativo_proceso(request):
 def motivo(request):
 	motivo = elimina_tildes(request.GET['motivo']).lower().split(' ')[0]
 	html = render_to_string('motivos/%s.html' % motivo, {})
+	return HttpResponse(html)
+
+def servicio(request):
+	servicio = elimina_tildes(request.GET['servicio']).lower().split(' ')[0]
+	html =  render_to_string('servicios/%s.html' % servicio, {})
 	return HttpResponse(html)
